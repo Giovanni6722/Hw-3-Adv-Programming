@@ -12,7 +12,34 @@ public class AppController
     @FXML
     protected void onCalcClick()
     {
-        monthly.setText("button work");
-        total.setText("total and monthly also work");
+      try
+      {
+            double annualRate = Double.parseDouble(interestRate.getText().trim());
+            double totalYears = Double.parseDouble(years.getText().trim());
+            double loanTotal = Double.parseDouble(loan.getText().trim());
+            if(annualRate <= 0 || totalYears <= 0 || loanTotal <= 0)
+            {
+                monthly.setText("Inputs must be greater then 0");
+                total.setText("Inputs must be greater then 0");
+                return;
+            }
+            double monthlyRate = annualRate / 1200;
+            double numOfPaymentsMonthly = totalYears * 12;
+            double finalMonthlyRate = loanTotal * monthlyRate /
+                                        (1 - Math.pow(1 + monthlyRate, -numOfPaymentsMonthly));
+            double totalPay = finalMonthlyRate * numOfPaymentsMonthly;
+            monthly.setText(String.format("$%.2f", finalMonthlyRate));
+            total.setText(String.format("$%.2f", totalPay));
+      }
+      catch(NumberFormatException e)
+      {
+          monthly.setText("Please enter valid numbers only");
+          total.setText("Please enter valid numbers only");
+      }
+      catch(NullPointerException e)
+      {
+          monthly.setText("All fields must be filled");
+          total.setText("All fields must be filled");
+      }
     }
 }
