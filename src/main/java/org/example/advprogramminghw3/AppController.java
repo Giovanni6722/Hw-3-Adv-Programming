@@ -7,13 +7,12 @@ import javafx.scene.control.TextField;
 public class AppController
 {
     @FXML
-    private Label finalLabel;
-    @FXML
     private TextField interestRate, years, loan, monthly, total;
 
     @FXML
     protected void onCalcClick()
     {
-        finalLabel.setText("   button work");
+        monthly.setText("button work");
+        total.setText("total and monthly also work");
     }
 }
